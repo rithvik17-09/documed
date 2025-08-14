@@ -31,7 +31,7 @@ export function WelcomeScreen() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-center"
           >
-            <h1 className="text-4xl font-bold mb-2">HealthX Hub</h1>
+            <h1 className="text-4xl font-bold mb-2">Documed</h1>
             <p className="text-lg mb-8 opacity-90">Your personal healthcare assistant</p>
             <motion.div
               animate={{ rotate: 360 }}
@@ -46,3 +46,4 @@ export function WelcomeScreen() {
     </AnimatePresence>
   )
 }
+
