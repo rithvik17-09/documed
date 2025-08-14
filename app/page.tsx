@@ -17,7 +17,7 @@ export default function Home() {
       <WelcomeScreen />
       <header className="sticky top-0 z-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md p-4 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
         <h1 className="text-2xl font-bold bg-gradient-to-r from-teal-500 to-blue-500 bg-clip-text text-transparent">
-          HealthX Hub
+          Documed
         </h1>
         <ThemeToggle />
       </header>
@@ -33,3 +33,4 @@ export default function Home() {
     </div>
   )
 }
+
