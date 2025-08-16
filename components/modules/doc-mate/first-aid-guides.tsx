@@ -117,6 +117,33 @@ export function FirstAidGuides() {
       description: "Steps to control severe bleeding",
       thumbnail: "/placeholder.svg?height=120&width=200&text=Controlling+Bleeding",
       videoUrl: "#",
+      steps: [
+        {
+          title: "Apply direct pressure",
+          description:
+            "Use a clean cloth, gauze, or your hand to apply firm, steady pressure directly on the wound to stop the bleeding.",
+        },
+        {
+          title: "Keep pressure constant",
+          description:
+            "Do not remove the cloth if it becomes soaked. Place another cloth or bandage on top and continue pressing.",
+        },
+        {
+          title: "Elevate the injured area",
+          description:
+            "If possible, raise the bleeding limb above the level of the heart to help slow blood flow.",
+        },
+        {
+          title: "Use a tourniquet if needed",
+          description:
+            "For severe bleeding that doesn’t stop with direct pressure, apply a tourniquet above the wound. Note the time it was applied.",
+        },
+        {
+          title: "Seek medical help immediately",
+          description:
+            "Call emergency services or get professional medical care as soon as possible.",
+        },
+      ],
     },
   ]
 
