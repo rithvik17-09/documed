@@ -161,7 +161,7 @@ const moodContent = {
         type: "reading" as const,
         title: "Finding Your Purpose",
         description: "Discovering what drives you",
-        url: "#",
+        url: "https://www.ssgopalganj.in/online/E-Books/CLASS%20VIII/Life%20of%20Pi%20by%20Yann%20Martel.pdf",
       },
       {
         type: "reading" as const,
@@ -576,5 +576,6 @@ export function ContentSuggestions({ mood }: ContentSuggestionsProps) {
     </div>
   )
 }
+
 
 
