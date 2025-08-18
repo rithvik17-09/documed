@@ -577,5 +577,3 @@ export function ContentSuggestions({ mood }: ContentSuggestionsProps) {
   )
 }
 
-
-i wanna redirect the reading section books link 
