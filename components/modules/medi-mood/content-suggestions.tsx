@@ -63,15 +63,15 @@ const moodContent = {
     reading: [
       {
         type: "reading" as const,
-        title: "The Science of Happiness",
+        title: "The Rules of Life",
         description: "Research-backed ways to maintain happiness",
-        url: "#",
+        url: "http://albaab.free.fr/The%20Rules%20of%20Life.pdf",
       },
       {
         type: "reading" as const,
-        title: "Positive Affirmations",
+        title: "Life of Pi",
         description: "Daily affirmations to reinforce your positive mindset",
-        url: "#",
+        url: "https://www.ssgopalganj.in/online/E-Books/CLASS%20VIII/Life%20of%20Pi%20by%20Yann%20Martel.pdf",
       },
     ],
   },
@@ -576,3 +576,4 @@ export function ContentSuggestions({ mood }: ContentSuggestionsProps) {
     </div>
   )
 }
+
