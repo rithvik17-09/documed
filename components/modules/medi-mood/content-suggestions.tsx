@@ -63,15 +63,15 @@ const moodContent = {
     reading: [
       {
         type: "reading" as const,
-        title: "The Rules of Life",
+        title: "The Science of Happiness",
         description: "Research-backed ways to maintain happiness",
-        url: "http://albaab.free.fr/The%20Rules%20of%20Life.pdf",
+        url: "#",
       },
       {
         type: "reading" as const,
-        title: "Life of Pi",
+        title: "Positive Affirmations",
         description: "Daily affirmations to reinforce your positive mindset",
-        url: "https://www.ssgopalganj.in/online/E-Books/CLASS%20VIII/Life%20of%20Pi%20by%20Yann%20Martel.pdf",
+        url: "#",
       },
     ],
   },
@@ -111,15 +111,15 @@ const moodContent = {
     reading: [
       {
         type: "reading" as const,
-        title: "The Art of Serenity",
+        title: "Life of Pi",
         description: "Finding peace in everyday life",
-        url: "#",
+        url: "https://www.ssgopalganj.in/online/E-Books/CLASS%20VIII/Life%20of%20Pi%20by%20Yann%20Martel.pdf",
       },
       {
         type: "reading" as const,
-        title: "Mindful Living",
+        title: "The Rules of Life",
         description: "Practices for a more centered existence",
-        url: "#",
+        url: "http://albaab.free.fr/The%20Rules%20of%20Life.pdf",
       },
     ],
   },
@@ -576,4 +576,5 @@ export function ContentSuggestions({ mood }: ContentSuggestionsProps) {
     </div>
   )
 }
+
 
