@@ -8,93 +8,89 @@ import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Loader2, Send, Video, BookOpen, Music } from "lucide-react"
 
-type ContentItem = {
+type Guide = {
+  id: string
   title: string
   description: string
   url: string
 }
 
-type MoodContent = {
-  reading: ContentItem[]
-  videos: ContentItem[]
-  music: ContentItem[]
-}
+const readingGuides: Guide[] = [
+  {
+    id: "1",
+    title: "AI for Beginners",
+    description: "Start your AI journey with this beginner-friendly guide.",
+    url: "https://example.com/ai-beginners",
+  },
+  {
+    id: "2",
+    title: "Machine Learning Basics",
+    description: "Learn the fundamentals of machine learning step by step.",
+    url: "https://example.com/ml-basics",
+  },
+]
 
-export default function MoodCompanion() {
-  const [mood, setMood] = useState("")
-  const [content, setContent] = useState<MoodContent>({
-    reading: [],
-    videos: [],
-    music: [],
-  })
-  const [isLoading, setIsLoading] = useState(false)
+const videoGuides: Guide[] = [
+  {
+    id: "1",
+    title: "Intro to AI",
+    description: "Watch this beginner-friendly video introduction to AI.",
+    url: "https://www.youtube.com/watch?v=example1",
+  },
+  {
+    id: "2",
+    title: "ML Explained",
+    description: "A comprehensive video on machine learning concepts.",
+    url: "https://www.youtube.com/watch?v=example2",
+  },
+]
 
-  const handleGenerate = async () => {
-    if (!mood.trim()) return
-    setIsLoading(true)
+const musicGuides: Guide[] = [
+  {
+    id: "1",
+    title: "LoFi Study Beats",
+    description: "Relax and focus with AI-generated LoFi beats.",
+    url: "https://open.spotify.com/track/example1",
+  },
+  {
+    id: "2",
+    title: "Calm Focus",
+    description: "Instrumental music to help you concentrate.",
+    url: "https://open.spotify.com/track/example2",
+  },
+]
 
-    // Simulated API response
+export default function Guides() {
+  const [loading, setLoading] = useState(false)
+  const [input, setInput] = useState("")
+
+  const handleAskAI = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!input.trim()) return
+    setLoading(true)
     setTimeout(() => {
-      setContent({
-        reading: [
-          {
-            title: "The Power of Now",
-            description: "A guide to spiritual enlightenment by Eckhart Tolle",
-            url: "https://example.com/power-of-now",
-          },
-        ],
-        videos: [
-          {
-            title: "Motivational Video",
-            description: "Stay motivated with this short inspirational video",
-            url: "https://youtube.com/example",
-          },
-        ],
-        music: [
-          {
-            title: "Relaxing Piano Music",
-            description: "Soothing instrumental music to calm your mind",
-            url: "https://spotify.com/example",
-          },
-        ],
-      })
-      setIsLoading(false)
-    }, 1500)
+      setLoading(false)
+      setInput("")
+    }, 2000)
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-4 space-y-6">
-      {/* Input Section */}
-      <Card className="bg-gradient-to-r from-purple-50 to-pink-50">
-        <CardContent className="p-6 space-y-4">
-          <h2 className="text-2xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Mood Companion
-          </h2>
-          <div className="flex gap-2">
-            <Input
-              placeholder="How are you feeling today?"
-              value={mood}
-              onChange={(e) => setMood(e.target.value)}
-              className="flex-1"
-            />
-            <Button
-              onClick={handleGenerate}
-              disabled={isLoading}
-              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white"
-            >
-              {isLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Send className="h-4 w-4" />
-              )}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="max-w-4xl mx-auto p-4 space-y-6">
+      {/* Search Bar */}
+      <form onSubmit={handleAskAI} className="flex gap-2">
+        <Input
+          placeholder="Ask AI for personalized guidance..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <Button type="submit" disabled={loading}>
+          {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+        </Button>
+      </form>
 
-      {/* Content Section */}
+      {/* Tabs Section */}
       <Tabs defaultValue="reading" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid grid-cols-3 w-full">
           <TabsTrigger value="reading" className="flex items-center gap-2">
             <BookOpen className="h-4 w-4" /> Reading
           </TabsTrigger>
@@ -106,97 +102,55 @@ export default function MoodCompanion() {
           </TabsTrigger>
         </TabsList>
 
-        {/* Reading Section */}
-        <TabsContent value="reading" className="space-y-4">
-          {isLoading ? (
-            <Card className="bg-gray-50">
-              <CardContent className="p-8 flex justify-center items-center">
-                <Loader2 className="h-8 w-8 animate-spin text-purple-500" />
-              </CardContent>
-            </Card>
-          ) : content.reading.length > 0 ? (
-            content.reading.map((item, index) => (
-              <Card key={index}>
-                <CardContent className="p-4">
-                  <h4 className="font-medium">{item.title}</h4>
-                  <p className="text-sm text-gray-500 mt-1">{item.description}</p>
+        {/* Reading Tab */}
+        <TabsContent value="reading" className="space-y-4 mt-4">
+          {readingGuides.map((item) => (
+            <Card key={item.id}>
+              <CardContent className="p-4 flex flex-col space-y-2">
+                <h3 className="font-semibold">{item.title}</h3>
+                <p className="text-sm text-gray-600">{item.description}</p>
+                <Button asChild className="w-full mt-3 bg-gradient-to-r from-purple-500 to-pink-500">
                   <a href={item.url} target="_blank" rel="noopener noreferrer">
-                    <Button className="w-full mt-3 bg-gradient-to-r from-purple-500 to-pink-500">
-                      Read Now
-                    </Button>
+                    Read Now
                   </a>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <Card className="bg-gray-50">
-              <CardContent className="p-8 text-center text-gray-500">
-                No reading suggestions available. Try selecting a mood first.
+                </Button>
               </CardContent>
             </Card>
-          )}
+          ))}
         </TabsContent>
 
-        {/* Videos Section */}
-        <TabsContent value="videos" className="space-y-4">
-          {isLoading ? (
-            <Card className="bg-gray-50">
-              <CardContent className="p-8 flex justify-center items-center">
-                <Loader2 className="h-8 w-8 animate-spin text-purple-500" />
-              </CardContent>
-            </Card>
-          ) : content.videos.length > 0 ? (
-            content.videos.map((item, index) => (
-              <Card key={index}>
-                <CardContent className="p-4">
-                  <h4 className="font-medium">{item.title}</h4>
-                  <p className="text-sm text-gray-500 mt-1">{item.description}</p>
+        {/* Videos Tab */}
+        <TabsContent value="videos" className="space-y-4 mt-4">
+          {videoGuides.map((item) => (
+            <Card key={item.id}>
+              <CardContent className="p-4 flex flex-col space-y-2">
+                <h3 className="font-semibold">{item.title}</h3>
+                <p className="text-sm text-gray-600">{item.description}</p>
+                <Button asChild className="w-full mt-3 bg-gradient-to-r from-blue-500 to-cyan-500">
                   <a href={item.url} target="_blank" rel="noopener noreferrer">
-                    <Button className="w-full mt-3 bg-gradient-to-r from-purple-500 to-pink-500">
-                      Watch Now
-                    </Button>
+                    Watch Now
                   </a>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <Card className="bg-gray-50">
-              <CardContent className="p-8 text-center text-gray-500">
-                No video suggestions available. Try selecting a mood first.
+                </Button>
               </CardContent>
             </Card>
-          )}
+          ))}
         </TabsContent>
 
-        {/* Music Section */}
-        <TabsContent value="music" className="space-y-4">
-          {isLoading ? (
-            <Card className="bg-gray-50">
-              <CardContent className="p-8 flex justify-center items-center">
-                <Loader2 className="h-8 w-8 animate-spin text-purple-500" />
-              </CardContent>
-            </Card>
-          ) : content.music.length > 0 ? (
-            content.music.map((item, index) => (
-              <Card key={index}>
-                <CardContent className="p-4">
-                  <h4 className="font-medium">{item.title}</h4>
-                  <p className="text-sm text-gray-500 mt-1">{item.description}</p>
+        {/* Music Tab */}
+        <TabsContent value="music" className="space-y-4 mt-4">
+          {musicGuides.map((item) => (
+            <Card key={item.id}>
+              <CardContent className="p-4 flex flex-col space-y-2">
+                <h3 className="font-semibold">{item.title}</h3>
+                <p className="text-sm text-gray-600">{item.description}</p>
+                <Button asChild className="w-full mt-3 bg-gradient-to-r from-green-500 to-emerald-500">
                   <a href={item.url} target="_blank" rel="noopener noreferrer">
-                    <Button className="w-full mt-3 bg-gradient-to-r from-purple-500 to-pink-500">
-                      Listen Now
-                    </Button>
+                    Listen Now
                   </a>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <Card className="bg-gray-50">
-              <CardContent className="p-8 text-center text-gray-500">
-                No music suggestions available. Try selecting a mood first.
+                </Button>
               </CardContent>
             </Card>
-          )}
+          ))}
         </TabsContent>
       </Tabs>
     </div>
