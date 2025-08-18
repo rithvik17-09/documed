@@ -223,4 +223,3 @@ export default function DocMate() {
     </motion.div>
   )
 }
-modify in this and tell me how to add 
