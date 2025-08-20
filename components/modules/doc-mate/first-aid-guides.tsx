@@ -28,7 +28,7 @@ export function FirstAidGuides() {
       id: "1",
       title: "CPR Basics",
       description: "Learn the essential steps of cardiopulmonary resuscitation (CPR)",
-      thumbnail: "/placeholder.svg?height=120&width=200&text=CPR+Basics",
+      thumbnail: "/cpr.svg?height=120&width=200&text=CPR+Basics",
       videoUrl: "#",
       steps: [
         {
@@ -233,3 +233,4 @@ export function FirstAidGuides() {
     </div>
   )
 }
+
