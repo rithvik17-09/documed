@@ -130,14 +130,14 @@ const moodContent = {
         title: "Balanced Living",
         description: "Finding equilibrium in daily life",
         url: "#",
-        thumbnail: `/placeholder.svg?height=120&width=200&text=Balanced+Living`,
+        thumbnail: `/Life-Balance.svg?height=120&width=200&text=Balanced+Living`,
       },
       {
         type: "video" as const,
         title: "Mindfulness Basics",
         description: "Introduction to mindfulness practices",
         url: "#",
-        thumbnail: `/placeholder.svg?height=120&width=200&text=Mindfulness+Basics`,
+        thumbnail: `/mindfulness.svg?height=120&width=200&text=Mindfulness+Basics`,
       },
     ],
     music: [
@@ -146,14 +146,14 @@ const moodContent = {
         title: "Focused Playlist",
         description: "Music to help you concentrate",
         url: "#",
-        thumbnail: `/placeholder.svg?height=120&width=200&text=Focused+Music`,
+        thumbnail: `/focus.svg?height=120&width=200&text=Focused+Music`,
       },
       {
         type: "music" as const,
         title: "Ambient Work Sounds",
         description: "Background sounds for productivity",
         url: "#",
-        thumbnail: `/placeholder.svg?height=120&width=200&text=Work+Sounds`,
+        thumbnail: `/ambient.svg?height=120&width=200&text=Work+Sounds`,
       },
     ],
     reading: [
@@ -576,4 +576,5 @@ export function ContentSuggestions({ mood }: ContentSuggestionsProps) {
     </div>
   )
 }
+
 
