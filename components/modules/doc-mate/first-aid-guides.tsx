@@ -58,7 +58,7 @@ export function FirstAidGuides() {
       id: "2",
       title: "Treating Burns",
       description: "First aid steps for different types of burns",
-      thumbnail: "/placeholder.svg?height=120&width=200&text=Treating+Burns",
+      thumbnail: "/burns.svg?height=120&width=200&text=Treating+Burns",
       videoUrl: "#",
       steps: [
         {
@@ -89,7 +89,7 @@ export function FirstAidGuides() {
       id: "3",
       title: "Choking Response",
       description: "How to help someone who is choking",
-      thumbnail: "/placeholder.svg?height=120&width=200&text=Choking+Response",
+      thumbnail: "/chocking.svg?height=120&width=200&text=Choking+Response",
       videoUrl: "#",
       steps: [
         {
@@ -115,7 +115,7 @@ export function FirstAidGuides() {
       id: "4",
       title: "Controlling Bleeding",
       description: "Steps to control severe bleeding",
-      thumbnail: "/placeholder.svg?height=120&width=200&text=Controlling+Bleeding",
+      thumbnail: "/bleeding.svg?height=120&width=200&text=Controlling+Bleeding",
       videoUrl: "#",
       steps: [
         {
@@ -233,4 +233,5 @@ export function FirstAidGuides() {
     </div>
   )
 }
+
 
