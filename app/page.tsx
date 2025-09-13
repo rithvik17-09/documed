@@ -7,6 +7,7 @@ import MediMate from "@/components/modules/medi-mate"
 import MediMood from "@/components/modules/medi-mood"
 import PulseChain from "@/components/modules/pulse-chain"
 import DocMate from "@/components/modules/doc-mate"
+import XrayAnalyser from "@/components/modules/xray-analyser/index.lazy"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { WelcomeScreen } from "@/components/welcome-screen"
 
@@ -24,10 +25,11 @@ export default function Home() {
       </header>
 
       <div className="p-4">
-        {activeTab === "medimate" && <MediMate />}
-        {activeTab === "medimood" && <MediMood />}
-        {activeTab === "pulsechain" && <PulseChain />}
-        {activeTab === "docmate" && <DocMate />}
+  {activeTab === "medimate" && <MediMate />}
+  {activeTab === "medimood" && <MediMood />}
+  {activeTab === "pulsechain" && <PulseChain />}
+  {activeTab === "docmate" && <DocMate />}
+  {activeTab === "xray-analyser" && <XrayAnalyser />}
       </div>
 
       <BottomNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
