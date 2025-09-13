@@ -1,6 +1,6 @@
 "use client"
 
-import { MessageSquare, SmilePlus, AlertTriangle, Stethoscope } from "lucide-react"
+import { MessageSquare, SmilePlus, AlertTriangle, Stethoscope, UploadCloud } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface BottomNavigationProps {
@@ -33,6 +33,12 @@ export function BottomNavigation({ activeTab, setActiveTab }: BottomNavigationPr
       label: "DocMate",
       icon: Stethoscope,
       color: "from-blue-500 to-indigo-500",
+    },
+    {
+      id: "xray-analyser",
+      label: "Xray Analyser",
+      icon: UploadCloud,
+      color: "from-blue-600 to-blue-400",
     },
   ]
 
