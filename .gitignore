@@ -5,3 +5,6 @@ node_modules
 
 # Next.js modules (if any custom ones)
 next
+
+# Local environment variables
+.env.local
