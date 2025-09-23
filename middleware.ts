@@ -12,7 +12,7 @@ export default async function middleware(request: NextRequest) {
   }
   if (token && isAuthPage) {
     // Redirect authenticated users to the external main page
-    return NextResponse.redirect("https://documed-virid.vercel.app/");
+    return NextResponse.redirect("https://documed-o2av46fnk-rithviks-projects-14bc107b.vercel.app/");
   }
   return NextResponse.next();
 }

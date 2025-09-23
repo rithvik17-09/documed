@@ -3,6 +3,23 @@
 import type React from "react"
 
 import { useState } from "react"
+
+// Use Next.js API route for Gemini calls (server-side, secure)
+async function fetchGeminiResponse(query: string): Promise<string> {
+  try {
+    const res = await fetch("/api/gemini", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query }),
+    });
+    const data = await res.json();
+    if (data?.gemini) return data.gemini;
+    if (data?.error) return `Gemini error: ${data.error}`;
+    return "Sorry, I couldn't get a response from Gemini.";
+  } catch (e) {
+    return "Sorry, there was an error contacting Gemini API.";
+  }
+}
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -82,27 +99,37 @@ export default function DocMate() {
   }
 
   const handleSend = async () => {
-    if (!input.trim()) return
+    if (!input.trim()) return;
 
-    // Add user message
-    const userMessage: Message = { role: "user", content: input }
-    setMessages((prev) => [...prev, userMessage])
-    setInput("")
-    setIsLoading(true)
+    const userMessage: Message = { role: "user", content: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
 
-    // Simulate API delay
-    setTimeout(() => {
-      // Generate response based on keywords
-      const responseText = getFirstAidResponse(userMessage.content)
+    // Get both keyword-based and Gemini responses in parallel
+    const [keywordResponse, geminiResponse] = await Promise.all([
+      Promise.resolve(getFirstAidResponse(userMessage.content)),
+      fetchGeminiResponse(userMessage.content),
+    ]);
 
-      // Add disclaimer
-      const fullResponse = `${responseText}\n\nIMPORTANT: This is general first aid guidance only. Always call emergency services (911) for serious situations. This information is not a substitute for professional medical advice or training.`
+    let fullResponse = "";
+    const normalize = (str: string) => str.replace(/\s+/g, '').toLowerCase();
+    const isDefault = normalize(keywordResponse).includes("idonthavespecificinformationaboutthatsituation");
+    // Debug logs
+    console.log("keywordResponse:", keywordResponse);
+    console.log("isDefault:", isDefault);
+    if (isDefault) {
+      fullResponse = `Gemini AI says: ${geminiResponse}\n\nIMPORTANT: This is general first aid guidance only. Always call emergency services (911) for serious situations. This information is not a substitute for professional medical advice or training.`;
+    } else {
+      fullResponse = `DocMate advice: ${keywordResponse}\n\nGemini AI says: ${geminiResponse}\n\nIMPORTANT: This is general first aid guidance only. Always call emergency services (911) for serious situations. This information is not a substitute for professional medical advice or training.`;
+    }
 
-      // Add assistant message
-      setMessages((prev) => [...prev, { role: "assistant", content: fullResponse }])
-      setIsLoading(false)
-    }, 1000)
-  }
+    setMessages((prev) => [
+      ...prev,
+      { role: "assistant", content: fullResponse },
+    ]);
+    setIsLoading(false);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
