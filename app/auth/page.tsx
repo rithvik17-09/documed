@@ -8,6 +8,7 @@ export default function AuthPage() {
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [gmail, setGmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -36,7 +37,7 @@ export default function AuthPage() {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ username, password, gmail })
     });
     let data: any = {};
     try {
@@ -126,7 +127,7 @@ export default function AuthPage() {
                 name="username"
                 type="text"
                 required
-                placeholder="Enter your email"
+                placeholder="Enter your username"
                 className="w-full outline-none border-none bg-transparent"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
@@ -146,6 +147,23 @@ export default function AuthPage() {
                 className="w-full outline-none border-none bg-transparent"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="mb-4 flex items-center border-b border-gray-300 py-2">
+              <span className="text-gray-400 mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 7.5v9a2.25 2.25 0 01-2.25 2.25h-15A2.25 2.25 0 012.25 16.5v-9A2.25 2.25 0 014.5 5.25h15A2.25 2.25 0 0121.75 7.5z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 7.5l9.75 6.75L21.75 7.5" />
+                </svg>
+              </span>
+              <input
+                name="gmail"
+                type="email"
+                required
+                placeholder="Enter your Gmail address"
+                className="w-full outline-none border-none bg-transparent"
+                value={gmail}
+                onChange={e => setGmail(e.target.value)}
               />
             </div>
             <button

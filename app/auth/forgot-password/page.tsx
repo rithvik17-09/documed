@@ -2,8 +2,8 @@
 import { useState } from "react";
 
 export default function ForgotPassword() {
-  const [username, setUsername] = useState("");
-  const [resetToken, setResetToken] = useState("");
+  const [gmail, setGmail] = useState("");
+  const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [step, setStep] = useState(1);
   const [message, setMessage] = useState("");
@@ -13,15 +13,15 @@ export default function ForgotPassword() {
     e.preventDefault();
     setError("");
     setMessage("");
-    const res = await fetch("/api/auth/forgot-password", {
+  const res = await fetch("/api/auth/forgot-password/request", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username })
+      body: JSON.stringify({ gmail })
     });
     const data = await res.json();
     if (data.success) {
       setStep(2);
-      setMessage(`Your reset token: ${data.resetToken}`); // In real app, this would be emailed
+      setMessage("An OTP has been sent to your Gmail.");
     } else {
       setError(data.error || "Request failed");
     }
@@ -31,17 +31,17 @@ export default function ForgotPassword() {
     e.preventDefault();
     setError("");
     setMessage("");
-    const res = await fetch("/api/auth/forgot-password", {
+  const res = await fetch("/api/auth/forgot-password/reset", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, resetToken, newPassword })
+      body: JSON.stringify({ gmail, otp, newPassword })
     });
     const data = await res.json();
     if (data.success) {
       setMessage("Password reset successful! You can now log in.");
       setStep(1);
-      setUsername("");
-      setResetToken("");
+      setGmail("");
+      setOtp("");
       setNewPassword("");
     } else {
       setError(data.error || "Reset failed");
@@ -55,12 +55,12 @@ export default function ForgotPassword() {
         {error && <div className="text-red-600 text-center mb-2">{error}</div>}
         {message && <div className="text-green-600 text-center mb-2">{message}</div>}
         <div className="mb-4">
-          <input name="username" type="text" required placeholder="Enter your email" className="w-full outline-none border-b border-gray-300 py-2" value={username} onChange={e => setUsername(e.target.value)} />
+          <input name="gmail" type="email" required placeholder="Enter your Gmail address" className="w-full outline-none border-b border-gray-300 py-2" value={gmail} onChange={e => setGmail(e.target.value)} />
         </div>
         {step === 2 && (
           <>
             <div className="mb-4">
-              <input name="resetToken" type="text" required placeholder="Enter reset token" className="w-full outline-none border-b border-gray-300 py-2" value={resetToken} onChange={e => setResetToken(e.target.value)} />
+              <input name="otp" type="text" required placeholder="Enter OTP" className="w-full outline-none border-b border-gray-300 py-2" value={otp} onChange={e => setOtp(e.target.value)} />
             </div>
             <div className="mb-4">
               <input name="newPassword" type="password" required placeholder="Enter new password" className="w-full outline-none border-b border-gray-300 py-2" value={newPassword} onChange={e => setNewPassword(e.target.value)} />
