@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   }
   await prisma.user.create({ data: { username, password, gmail } });
   try {
-    await sendSignupMail(gmail);
+    await sendSignupMail(gmail, username);
   } catch (e) {
     // Optionally log error, but don't block signup
     console.error('Failed to send signup email:', e);

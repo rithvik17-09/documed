@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -9,6 +10,7 @@ export default function AuthPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [gmail, setGmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -90,15 +92,26 @@ export default function AuthPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75A4.5 4.5 0 008 6.75v3.75m8.25 0a2.25 2.25 0 01-4.5 0m4.5 0h-4.5m-2.25 0a2.25 2.25 0 01-4.5 0m4.5 0h-4.5" />
                 </svg>
               </span>
-              <input
-                name="password"
-                type="password"
-                required
-                placeholder="Enter you password"
-                className="w-full outline-none border-none bg-transparent"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-              />
+              <div className="relative w-full">
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  placeholder="Enter you password"
+                  className="w-full outline-none border-none bg-transparent pr-10"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  onClick={() => setShowPassword((v) => !v)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
             </div>
             <div className="flex items-center justify-between mb-4 text-sm">
               <label className="flex items-center">
@@ -139,15 +152,26 @@ export default function AuthPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75A4.5 4.5 0 008 6.75v3.75m8.25 0a2.25 2.25 0 01-4.5 0m4.5 0h-4.5m-2.25 0a2.25 2.25 0 01-4.5 0m4.5 0h-4.5" />
                 </svg>
               </span>
-              <input
-                name="password"
-                type="password"
-                required
-                placeholder="Enter your password"
-                className="w-full outline-none border-none bg-transparent"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-              />
+              <div className="relative w-full">
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  placeholder="Enter your password"
+                  className="w-full outline-none border-none bg-transparent pr-10"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  tabIndex={-1}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  onClick={() => setShowPassword((v) => !v)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
             </div>
             <div className="mb-4 flex items-center border-b border-gray-300 py-2">
               <span className="text-gray-400 mr-2">

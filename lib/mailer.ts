@@ -9,12 +9,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendSignupMail(to: string) {
+export async function sendSignupMail(to: string, name: string) {
   const mailOptions = {
     from: process.env.GMAIL_USER,
     to,
-    subject: 'Signup Successful',
-    text: 'Welcome! Your signup was successful.',
+    subject: 'Welcome to DocuMed! 🎉',
+    text: `Dear ${name},\n\nWe’re excited to welcome you to DocuMed! 🎉\nThank you for joining our community dedicated to making healthcare smarter, faster, and more accessible.\n\nWith DocuMed, you can:\n\n-> Manage and analyze medical documents easily\n-> Get AI-powered insights and summaries\n\nWe’re thrilled to have you onboard and can’t wait for you to experience everything DocuMed has to offer.\n\nIf you have any questions, feel free to reach out to us at ortest1990@gmail.com\n\nOnce again, welcome to the DocuMed family! 💙\n\nWarm regards,\nTeam DocuMed`,
   };
   await transporter.sendMail(mailOptions);
 }
