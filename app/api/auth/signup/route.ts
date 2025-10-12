@@ -7,10 +7,18 @@ export async function POST(req: Request) {
   if (!username || !password || !gmail) {
     return NextResponse.json({ error: "Username, password, and Gmail are required" }, { status: 400 });
   }
-  const existing = await prisma.user.findUnique({ where: { username } });
-  if (existing) {
+  // Check if username already exists
+  const existingByUsername = await prisma.user.findUnique({ where: { username } });
+  if (existingByUsername) {
     return NextResponse.json({ error: "User already exists" }, { status: 409 });
   }
+
+  // Check if gmail already exists and return a clear message we can show in the UI
+  const existingByGmail = await prisma.user.findUnique({ where: { gmail } });
+  if (existingByGmail) {
+    return NextResponse.json({ error: "Gmail already exists please login" }, { status: 409 });
+  }
+
   await prisma.user.create({ data: { username, password, gmail } });
   try {
     await sendSignupMail(gmail, username);

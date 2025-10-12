@@ -123,7 +123,7 @@ export function SymptomChecker() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-16rem)]">
-      <Card className="flex-1 overflow-hidden bg-gradient-to-br from-teal-50 to-blue-50 border-teal-100">
+      <Card className="flex-1 overflow-hidden bg-gradient-to-br from-teal-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 border-teal-100 dark:border-gray-700 transition-colors">
         <CardContent className="p-4 h-full flex flex-col">
           <div className="flex-1 overflow-y-auto space-y-4 pb-4">
             {messages.map((message, index) => (
@@ -136,7 +136,9 @@ export function SymptomChecker() {
               >
                 <div
                   className={`max-w-[80%] rounded-lg p-3 ${
-                    message.role === "user" ? "bg-teal-500 text-white" : "bg-white border border-teal-100"
+                    message.role === "user" 
+                      ? "bg-teal-500 text-white" 
+                      : "bg-white dark:bg-gray-700 border border-teal-100 dark:border-gray-600 text-gray-800 dark:text-gray-200 transition-colors"
                   }`}
                 >
                   {message.content}
@@ -145,21 +147,21 @@ export function SymptomChecker() {
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="max-w-[80%] rounded-lg p-3 bg-white border border-teal-100">
+                <div className="max-w-[80%] rounded-lg p-3 bg-white dark:bg-gray-700 border border-teal-100 dark:border-gray-600 transition-colors">
                   <Loader2 className="h-5 w-5 animate-spin text-teal-500" />
                 </div>
               </div>
             )}
           </div>
 
-          <div className="pt-2 border-t border-teal-100">
+          <div className="pt-2 border-t border-teal-100 dark:border-gray-600 transition-colors">
             <div className="flex gap-2 mb-2 overflow-x-auto pb-2">
               {commonSymptoms.map((symptom) => (
                 <Button
                   key={symptom}
                   variant="outline"
                   size="sm"
-                  className="whitespace-nowrap bg-white"
+                  className="whitespace-nowrap bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 transition-colors"
                   onClick={() => addSymptom(symptom)}
                 >
                   {symptom}
@@ -167,13 +169,13 @@ export function SymptomChecker() {
               ))}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline" size="sm" className="whitespace-nowrap bg-white">
+                  <Button variant="outline" size="sm" className="whitespace-nowrap bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 transition-colors">
                     <Plus className="h-4 w-4 mr-1" /> More
                   </Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                   <DialogHeader>
-                    <DialogTitle>Common Symptoms</DialogTitle>
+                    <DialogTitle className="text-gray-900 dark:text-white">Common Symptoms</DialogTitle>
                   </DialogHeader>
                   <div className="grid grid-cols-2 gap-2">
                     {[
@@ -193,7 +195,7 @@ export function SymptomChecker() {
                       <Button
                         key={symptom}
                         variant="outline"
-                        className="justify-start"
+                        className="justify-start bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 transition-colors"
                         onClick={() => {
                           addSymptom(symptom)
                         }}
@@ -212,7 +214,7 @@ export function SymptomChecker() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="bg-white"
+                className="bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-colors"
               />
               <Button onClick={handleSend} disabled={isLoading || !input.trim()}>
                 <Send className="h-4 w-4" />

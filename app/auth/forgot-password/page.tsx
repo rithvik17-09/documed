@@ -36,6 +36,7 @@ export default function ForgotPassword() {
       setLoading(false);
     }
   }
+
   async function handleResetPassword(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -49,10 +50,10 @@ export default function ForgotPassword() {
       });
       const data = await res.json();
       if (data.success) {
-        setMessage("Password reset successful! You can now log in.");
+        setMessage("Password reset successful! Redirecting to login...");
         setTimeout(() => {
-          router.push("/auth/signin");
-        }, 1500);
+          router.push("/auth");
+        }, 2000);
         setStep(1);
         setGmail("");
         setOtp("");
@@ -66,13 +67,21 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-800 to-blue-900">
-      <form onSubmit={step === 1 ? handleRequestReset : handleResetPassword} className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 relative">
-        <h2 className="text-2xl font-bold text-center mb-6">Forgot Password</h2>
-        {error && <div className="text-red-600 text-center mb-2">{error}</div>}
-        {message && <div className="text-green-600 text-center mb-2">{message}</div>}
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-800 to-blue-900 dark:from-gray-900 dark:to-black transition-colors duration-300">
+      <form onSubmit={step === 1 ? handleRequestReset : handleResetPassword} className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 relative transition-colors duration-300">
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-900 dark:text-white transition-colors">Forgot Password</h2>
+        {error && <div className="text-red-600 dark:text-red-400 text-center mb-2 transition-colors">{error}</div>}
+        {message && <div className="text-green-600 dark:text-green-400 text-center mb-2 transition-colors">{message}</div>}
         <div className="mb-4">
-          <input name="gmail" type="email" required placeholder="Enter your Gmail address" className="w-full outline-none border-b border-gray-300 py-2" value={gmail} onChange={e => setGmail(e.target.value)} />
+          <input 
+            name="gmail" 
+            type="email" 
+            required 
+            placeholder="Enter your Gmail address" 
+            className="w-full outline-none border-b border-gray-300 dark:border-gray-600 py-2 bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-colors" 
+            value={gmail} 
+            onChange={e => setGmail(e.target.value)} 
+          />
         </div>
         {step === 2 && (
           <>

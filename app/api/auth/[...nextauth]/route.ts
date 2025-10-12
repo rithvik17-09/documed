@@ -17,11 +17,23 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.username || !credentials?.password) return null;
-        const user = await prisma.user.findUnique({
-          where: { username: credentials.username },
+        
+        // Try to find user by username or gmail
+        const user = await prisma.user.findFirst({
+          where: {
+            OR: [
+              { username: credentials.username },
+              { gmail: credentials.username }
+            ]
+          }
         });
+        
         if (user && user.password === credentials.password) {
-          return { id: user.id.toString(), name: user.username };
+          return { 
+            id: user.id.toString(), 
+            name: user.username,
+            email: user.gmail
+          };
         }
         return null;
       }

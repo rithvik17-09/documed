@@ -16,11 +16,18 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} min-h-screen bg-background text-foreground`}>
         <SessionProviderWrapper>
-          <ThemeProvider attribute="class" defaultTheme="light">
-            <main className="min-h-screen bg-gradient-to-b from-blue-50 to-green-50">{children}</main>
+          <ThemeProvider 
+            attribute="class" 
+            defaultTheme="light" 
+            enableSystem
+            disableTransitionOnChange={false}
+          >
+            <main className="min-h-screen">
+              {children}
+            </main>
           </ThemeProvider>
         </SessionProviderWrapper>
       </body>

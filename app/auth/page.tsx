@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ export default function AuthPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const gmailRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
 
   async function handleSignIn(e: React.FormEvent) {
@@ -57,20 +58,26 @@ export default function AuthPage() {
       setError("");
       alert("Signup successful! Please log in.");
     } else {
-      setError(data.error || "Signup failed");
+      // If the backend reports the gmail already exists, focus the gmail input so user can correct it
+      if (data.error === "gmail exists please login") {
+        setError(data.error);
+        gmailRef.current?.focus();
+      } else {
+        setError(data.error || "Signup failed");
+      }
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#3a2066] to-[#1e085a] flex items-center justify-center">
-      <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-md relative">
-        <button className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-900">{mode === 'signin' ? 'Login' : 'Sign Up'}</h2>
-        {error && <div className="text-red-600 text-center mb-2">{error}</div>}
+    <div className="min-h-screen bg-gradient-to-br from-[#3a2066] to-[#1e085a] dark:from-gray-900 dark:to-black flex items-center justify-center transition-colors duration-300">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-8 w-full max-w-md relative transition-colors duration-300">
+        <button className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 text-2xl font-bold transition-colors">&times;</button>
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-900 dark:text-white transition-colors">{mode === 'signin' ? 'Login' : 'Sign Up'}</h2>
+        {error && <div className="text-red-600 dark:text-red-400 text-center mb-2 transition-colors">{error}</div>}
         {mode === 'signin' ? (
           <form onSubmit={handleSignIn}>
-            <div className="mb-4 flex items-center border-b border-gray-300 py-2">
-              <span className="text-gray-400 mr-2">
+            <div className="mb-4 flex items-center border-b border-gray-300 dark:border-gray-600 py-2 transition-colors">
+              <span className="text-gray-400 dark:text-gray-500 mr-2 transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 20.25v-1.5A2.25 2.25 0 016.75 16.5h10.5a2.25 2.25 0 012.25 2.25v1.5" />
@@ -81,7 +88,7 @@ export default function AuthPage() {
                 type="text"
                 required
                 placeholder="Enter your email"
-                className="w-full outline-none border-none bg-transparent"
+                className="w-full outline-none border-none bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition-colors"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
               />
@@ -185,6 +192,7 @@ export default function AuthPage() {
                 type="email"
                 required
                 placeholder="Enter your Gmail address"
+                ref={gmailRef}
                 className="w-full outline-none border-none bg-transparent"
                 value={gmail}
                 onChange={e => setGmail(e.target.value)}

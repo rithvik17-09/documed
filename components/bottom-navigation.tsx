@@ -1,5 +1,6 @@
 "use client"
 
+import type { ReactNode } from "react"
 import { MessageSquare, SmilePlus, AlertTriangle, Stethoscope, UploadCloud } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -9,7 +10,7 @@ interface BottomNavigationProps {
 }
 
 export function BottomNavigation({ activeTab, setActiveTab }: BottomNavigationProps) {
-  const tabs = [
+  const tabs: { id: string; label: ReactNode; icon: any; color: string }[] = [
     {
       id: "medimate",
       label: "MediMate",
@@ -36,7 +37,13 @@ export function BottomNavigation({ activeTab, setActiveTab }: BottomNavigationPr
     },
     {
       id: "xray-analyser",
-      label: "Xray Analyser",
+      label: (
+        <>
+          Xray &amp; MRI
+          <br />
+          analyser
+        </>
+      ),
       icon: UploadCloud,
       color: "from-blue-600 to-blue-400",
     },
