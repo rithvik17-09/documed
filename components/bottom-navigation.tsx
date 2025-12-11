@@ -24,12 +24,6 @@ export function BottomNavigation({ activeTab, setActiveTab }: BottomNavigationPr
       color: "from-purple-500 to-pink-500",
     },
     {
-      id: "pulsechain",
-      label: "PulseChain",
-      icon: AlertTriangle,
-      color: "from-red-500 to-orange-500",
-    },
-    {
       id: "docmate",
       label: "DocMate",
       icon: Stethoscope,
@@ -46,6 +40,12 @@ export function BottomNavigation({ activeTab, setActiveTab }: BottomNavigationPr
       ),
       icon: UploadCloud,
       color: "from-blue-600 to-blue-400",
+    },
+    {
+      id: "pulsechain",
+      label: "PulseChain",
+      icon: AlertTriangle,
+      color: "from-red-500 to-orange-500",
     },
   ]
 

@@ -56,7 +56,13 @@ export default function Home() {
             Welcome, {session?.user?.name || session?.user?.email}
           </span>
           <button
-            onClick={() => signOut({ callbackUrl: '/auth' })}
+            onClick={async () => {
+              // signOut without redirect, then navigate client-side to avoid
+              // NextAuth constructing an absolute URL that may point to an
+              // unavailable host (causes connection refused in some setups).
+              await signOut({ redirect: false })
+              router.push('/auth')
+            }}
             className="text-sm text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200 transition-colors"
           >
             Logout

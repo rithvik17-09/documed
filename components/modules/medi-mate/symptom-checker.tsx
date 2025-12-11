@@ -16,9 +16,13 @@ type Message = {
 }
 
 // Keyword-based responses for symptom checker
-const symptomResponses = {
+const symptomResponses: { [key: string]: string } = {
   headache:
     "Headaches can be caused by stress, dehydration, or eye strain. Try to rest, drink water, and reduce screen time. If it persists or is severe, consult a doctor.",
+  "severe headache":
+    "This could be due to sinus pressure, dehydration, or eye strain. Rest in a quiet place, hydrate, and use a cold compress; seek care if it persists or worsens.",
+  forehead:
+    "This could be due to sinus pressure, dehydration, or eye strain. Rest in a quiet place, hydrate, and use a cold compress; seek care if it persists or worsens.",
   fever:
     "Fever is often a sign that your body is fighting an infection. Rest, stay hydrated, and take acetaminophen if needed. If fever is high (above 103°F/39.4°C) or lasts more than 3 days, seek medical attention.",
   cough:
@@ -29,12 +33,22 @@ const symptomResponses = {
     "Fatigue can be caused by lack of sleep, poor diet, stress, or underlying medical conditions. Ensure you're getting enough rest, eating well, and staying hydrated. If fatigue persists, consult a doctor.",
   nausea:
     "Try eating small, bland meals and staying hydrated. Avoid strong odors and greasy foods. If vomiting occurs or nausea persists for more than 2 days, seek medical attention.",
+  nauseous:
+    "You may have mild food poisoning or indigestion sip clear fluids and avoid solid foods for a few hours. If vomiting or fever develops, seek medical attention.",
+  "nauseous after":
+    "You may have mild food poisoning or indigestion sip clear fluids and avoid solid foods for a few hours. If vomiting or fever develops, seek medical attention.",
   dizziness:
     "Dizziness can be caused by dehydration, inner ear issues, or low blood sugar. Sit or lie down, drink water, and have a small snack. If dizziness is severe or accompanied by other symptoms, seek medical help.",
+  "left chest pain":
+    "Chest pain can be serious  if it’s sharp, radiates to your arm/jaw, or is accompanied by breathlessness, seek emergency help immediately. Avoid exertion and sit upright while waiting for care.",
   "chest pain":
-    "Chest pain could be serious and might indicate a heart problem. If you're experiencing chest pain, especially if it's severe or accompanied by shortness of breath, seek emergency medical attention immediately.",
+    "Chest pain can be serious  if it’s sharp, radiates to your arm/jaw, or is accompanied by breathlessness, seek emergency help immediately. Avoid exertion and sit upright while waiting for care.",
   "abdominal pain":
     "Try resting, applying a heating pad, and avoiding foods that might irritate your stomach. If the pain is severe, persistent, or accompanied by fever, seek medical attention.",
+  "stomach cramps":
+    "Rest and drink plenty of fluids; avoid heavy or spicy foods. If pain persists or is severe, it may indicate an infection or digestive issue consult a doctor.",
+  "stomach cramp":
+    "Rest and drink plenty of fluids; avoid heavy or spicy foods. If pain persists or is severe, it may indicate an infection or digestive issue consult a doctor.",
   rash: "Avoid scratching and use mild, fragrance-free soap. Apply a cold compress or hydrocortisone cream. If the rash is widespread, painful, or accompanied by other symptoms, consult a doctor.",
   "shortness of breath":
     "This could be serious. Sit upright, try to stay calm, and use any prescribed inhalers if you have them. If the symptom is severe or new, seek emergency medical attention.",
@@ -52,6 +66,13 @@ const symptomResponses = {
     "Chills often accompany fever. Stay warm, rest, and drink plenty of fluids. If chills are severe or persistent, seek medical attention.",
   "loss of appetite":
     "Try eating small, frequent meals of foods you enjoy. If loss of appetite is accompanied by weight loss or lasts more than a few days, consult a healthcare provider.",
+  burn: "Cool the burn under running water for 10–15 minutes and avoid applying ice or butter. Cover it with a clean, non-stick bandage to prevent infection.",
+  burnt: "Cool the burn under running water for 10–15 minutes and avoid applying ice or butter. Cover it with a clean, non-stick bandage to prevent infection.",
+  "burnt finger": "Cool the burn under running water for 10–15 minutes and avoid applying ice or butter. Cover it with a clean, non-stick bandage to prevent infection.",
+  "blister in my eye":
+    "Avoid touching or rubbing your eye and rinse gently with clean water. Visit an eye specialist promptly to prevent infection or vision issues.",
+  "blister in eye":
+    "Avoid touching or rubbing your eye and rinse gently with clean water. Visit an eye specialist promptly to prevent infection or vision issues.",
 }
 
 export function SymptomChecker() {

@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from "framer-motion"
 // Mood detection dictionary
 const moodMap = {
   happy: {
+    mood: "happy",
     keywords: [
       "happy",
       "joy",
@@ -55,6 +56,7 @@ const moodMap = {
     ],
   },
   sad: {
+    mood: "sad",
     keywords: [
       "sad",
       "down",
@@ -98,6 +100,7 @@ const moodMap = {
     ],
   },
   anxious: {
+    mood: "anxious",
     keywords: [
       "anxious",
       "worried",
@@ -141,6 +144,7 @@ const moodMap = {
     ],
   },
   angry: {
+    mood: "angry",
     keywords: [
       "angry",
       "mad",

@@ -11,8 +11,9 @@ export default async function middleware(request: NextRequest) {
     return NextResponse.redirect(authUrl);
   }
   if (token && isAuthPage) {
-    // Redirect authenticated users to the external main page
-    return NextResponse.redirect("https://documed-o2av46fnk-rithviks-projects-14bc107b.vercel.app/");
+    // Redirect authenticated users to the app's main page
+    const mainUrl = new URL("/", request.url);
+    return NextResponse.redirect(mainUrl);
   }
   return NextResponse.next();
 }

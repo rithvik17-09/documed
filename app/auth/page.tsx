@@ -27,7 +27,8 @@ export default function AuthPage() {
     });
     setLoading(false);
     if (res && !res.error) {
-      window.location.href = "https://documed-o2av46fnk-rithviks-projects-14bc107b.vercel.app/";
+      // Redirect to the app's main page after successful login
+      window.location.href = "/";
     } else {
       setError("Invalid credentials");
     }
