@@ -8,7 +8,6 @@ export function WelcomeScreen() {
   const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    // Hide welcome screen after 3 seconds
     const timer = setTimeout(() => {
       setIsVisible(false)
     }, 3000)

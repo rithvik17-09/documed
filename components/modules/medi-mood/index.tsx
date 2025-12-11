@@ -47,7 +47,6 @@ export default function MediMood() {
 
   useEffect(() => {
     if (selectedMood) {
-      // Extract the base color from the gradient
       const baseColor = selectedMood.gradient.split(" ")[0].replace("from-", "")
       setBgColor(`bg-${baseColor}-50`)
     } else {
