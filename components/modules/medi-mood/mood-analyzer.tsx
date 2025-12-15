@@ -46,12 +46,12 @@ const moodMap = {
       {
         title: "Positive Vibes Only",
         url: "https://www.youtube.com/embed/lTRiuFIWV54",
-        thumbnail: "/placeholder.svg?height=120&width=200&text=Positive+Vibes",
+        thumbnail: "https://img.youtube.com/vi/lTRiuFIWV54/hqdefault.jpg",
       },
       {
         title: "Gratitude & Mindfulness",
         url: "https://www.youtube.com/embed/WPPPFqsECz0",
-        thumbnail: "/placeholder.svg?height=120&width=200&text=Gratitude+Mindfulness",
+        thumbnail: "https://img.youtube.com/vi/WPPPFqsECz0/hqdefault.jpg",
       },
     ],
   },
@@ -90,12 +90,12 @@ const moodMap = {
       {
         title: "Relaxing Piano Music",
         url: "https://www.youtube.com/embed/lCOF9LN_Zxs",
-        thumbnail: "/placeholder.svg?height=120&width=200&text=Relaxing+Piano",
+        thumbnail: "https://img.youtube.com/vi/lCOF9LN_Zxs/hqdefault.jpg",
       },
       {
         title: "How to Deal with Depression",
         url: "https://www.youtube.com/embed/MOGnCb4GRQ0",
-        thumbnail: "/placeholder.svg?height=120&width=200&text=Deal+With+Depression",
+        thumbnail: "https://img.youtube.com/vi/MOGnCb4GRQ0/hqdefault.jpg",
       },
     ],
   },
@@ -134,12 +134,12 @@ const moodMap = {
       {
         title: "Box Breathing Animation",
         url: "https://www.youtube.com/embed/tEmt1Znux58",
-        thumbnail: "/placeholder.svg?height=120&width=200&text=Box+Breathing",
+        thumbnail: "https://img.youtube.com/vi/tEmt1Znux58/hqdefault.jpg",
       },
       {
         title: "Guided Meditation for Anxiety",
         url: "https://www.youtube.com/embed/O-6f5wQXSu8",
-        thumbnail: "/placeholder.svg?height=120&width=200&text=Guided+Meditation",
+        thumbnail: "https://img.youtube.com/vi/O-6f5wQXSu8/hqdefault.jpg",
       },
     ],
   },
@@ -178,12 +178,12 @@ const moodMap = {
       {
         title: "Calm Down Techniques",
         url: "https://www.youtube.com/embed/BsVq5R_F6RA",
-        thumbnail: "/placeholder.svg?height=120&width=200&text=Calm+Down",
+        thumbnail: "https://img.youtube.com/vi/BsVq5R_F6RA/hqdefault.jpg",
       },
       {
         title: "Anger Management Strategies",
         url: "https://www.youtube.com/embed/aNHXHoV7zKQ",
-        thumbnail: "/placeholder.svg?height=120&width=200&text=Anger+Management",
+        thumbnail: "https://img.youtube.com/vi/aNHXHoV7zKQ/hqdefault.jpg",
       },
     ],
   },

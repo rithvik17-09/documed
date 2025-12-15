@@ -37,7 +37,7 @@ export function FirstAidGuides() {
         },
         {
           title: "Call emergency services",
-          description: "If unresponsive, call 911 or local emergency number",
+          description: "If unresponsive, call 108 or local emergency number",
         },
         {
           title: "Start chest compressions",

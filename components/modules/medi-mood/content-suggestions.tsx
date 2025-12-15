@@ -129,15 +129,15 @@ const moodContent = {
         type: "video" as const,
         title: "Balanced Living",
         description: "Finding equilibrium in daily life",
-        url: "#",
-        thumbnail: `/Life-Balance.svg?height=120&width=200&text=Balanced+Living`,
+        url: "https://youtu.be/O0yxJH2i0DE?si=M3mELFyAeR5W6Ju8",
+        thumbnail: `/Life-Balance.jpg?height=120&width=200&text=Balanced+Living`,
       },
       {
         type: "video" as const,
         title: "Mindfulness Basics",
         description: "Introduction to mindfulness practices",
-        url: "#",
-        thumbnail: `/mindfulness.svg?height=120&width=200&text=Mindfulness+Basics`,
+        url: "https://youtu.be/bLpChrgS0AY?si=YCf_z7cqaeTvNWII",
+        thumbnail: `/mindfulness.jpeg?height=120&width=200&text=Mindfulness+Basics`,
       },
     ],
     music: [
@@ -145,14 +145,14 @@ const moodContent = {
         type: "music" as const,
         title: "Focused Playlist",
         description: "Music to help you concentrate",
-        url: "#",
+        url: "https://soundcloud.com/relaxdaily/sets/deep-focus-music-studying-concentration-work",
         thumbnail: `/focus.svg?height=120&width=200&text=Focused+Music`,
       },
       {
         type: "music" as const,
         title: "Ambient Work Sounds",
         description: "Background sounds for productivity",
-        url: "#",
+        url: "https://mynoise.net/",
         thumbnail: `/ambient.svg?height=120&width=200&text=Work+Sounds`,
       },
     ],
@@ -425,6 +425,11 @@ export function ContentSuggestions({ mood }: ContentSuggestionsProps) {
     music: [],
     reading: [],
   })
+  
+  const openUrl = (url: string) => {
+    if (!url || url === "#") return
+    window.open(url, "_blank", "noopener,noreferrer")
+  }
 
   // Get content based on mood
   useEffect(() => {
@@ -497,7 +502,12 @@ export function ContentSuggestions({ mood }: ContentSuggestionsProps) {
                 <CardContent className="p-4">
                   <h4 className="font-medium">{video.title}</h4>
                   <p className="text-sm text-gray-500 mt-1">{video.description}</p>
-                  <Button className="w-full mt-3 bg-gradient-to-r from-purple-500 to-pink-500">Watch Now</Button>
+                  <Button
+                    className="w-full mt-3 bg-gradient-to-r from-purple-500 to-pink-500"
+                    onClick={() => openUrl(video.url)}
+                  >
+                    Watch Now
+                  </Button>
                 </CardContent>
               </Card>
             ))
@@ -534,7 +544,12 @@ export function ContentSuggestions({ mood }: ContentSuggestionsProps) {
                   </div>
                 </div>
                 <CardContent className="p-4 pt-0">
-                  <Button className="w-full mt-3 bg-gradient-to-r from-purple-500 to-pink-500">Listen Now</Button>
+                  <Button
+                    className="w-full mt-3 bg-gradient-to-r from-purple-500 to-pink-500"
+                    onClick={() => openUrl(item.url)}
+                  >
+                    Listen Now
+                  </Button>
                 </CardContent>
               </Card>
             ))
@@ -560,7 +575,12 @@ export function ContentSuggestions({ mood }: ContentSuggestionsProps) {
                 <CardContent className="p-4">
                   <h4 className="font-medium">{item.title}</h4>
                   <p className="text-sm text-gray-500 mt-1">{item.description}</p>
-                  <Button className="w-full mt-3 bg-gradient-to-r from-purple-500 to-pink-500">Read Now</Button>
+                  <Button
+                    className="w-full mt-3 bg-gradient-to-r from-purple-500 to-pink-500"
+                    onClick={() => openUrl(item.url)}
+                  >
+                    Read Now
+                  </Button>
                 </CardContent>
               </Card>
             ))

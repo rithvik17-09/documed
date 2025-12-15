@@ -31,8 +31,7 @@ export default function XrayAnalyser() {
     }
   };
 
-  // Simulated analysis - deterministic but varying fake results
-  // Always returns a Defective result with confidence >= 90 and at least 2 issues
+  // Analyze image using Gemini API
   const analyze = async () => {
     if (!image) return;
     setLoading(true);
@@ -40,115 +39,45 @@ export default function XrayAnalyser() {
     setStatus(null);
     setIssues([]);
 
-    // simulate processing delay
-    await new Promise((r) => setTimeout(r, 750));
+    try {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const base64Data = (e.target?.result as string).split(',')[1];
+        
+        try {
+          const response = await fetch('/api/analyze-image', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              imageData: base64Data,
+              imageType: image.type || 'image/jpeg',
+              mode: mode,
+            }),
+          });
 
-    // pools of possible findings for MRI and X-ray
-    const mriFindings = [
-      {
-        title: "Lesion",
-        severity: "high" as const,
-        location: "Temporal lobe",
-        description: "Suspicious hyperintense region noted on T2-weighted sequence",
-      },
-      {
-        title: "Edema",
-        severity: "medium" as const,
-        location: "Perilesional area",
-        description: "Mild surrounding edema pattern observed",
-      },
-      {
-        title: "Cystic Component",
-        severity: "low" as const,
-        location: "Frontal cortex",
-        description: "Small cystic pocket seen on axial slice",
-      },
-      {
-        title: "Enhancing Nodule",
-        severity: "medium" as const,
-        location: "Occipital lobe",
-        description: "Contrast-enhancing focus suspicious for lesion",
-      },
-      {
-        title: "Signal Abnormality",
-        severity: "high" as const,
-        location: "Parietal region",
-        description: "Focal signal abnormality noted on T1 sequence",
-      },
-    ];
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Analysis failed');
+          }
 
-    const xrayFindings = [
-      {
-        title: "Fracture",
-        severity: "high" as const,
-        location: "Left rib",
-        description: "Cortical discontinuity noted consistent with acute fracture",
-      },
-      {
-        title: "Consolidation",
-        severity: "medium" as const,
-        location: "Right lower lobe",
-        description: "Airspace consolidation suggests possible pneumonia",
-      },
-      {
-        title: "Pleural Effusion",
-        severity: "medium" as const,
-        location: "Left hemithorax",
-        description: "Small pleural effusion layering posteriorly",
-      },
-      {
-        title: "Opacity",
-        severity: "low" as const,
-        location: "Perihilar region",
-        description: "Nonspecific perihilar opacity — correlate clinically",
-      },
-    ];
-
-    // choose pool based on mode
-    const pool = mode === "mri" ? mriFindings : xrayFindings;
-
-    // pick 2-3 random findings without replacement
-    const chosen: DetectedIssue[] = [];
-  // MRI should always return exactly 2 issues chosen from the MRI pool.
-  const count = mode === "mri" ? 2 : 2 + Math.floor(Math.random() * 2); // MRI:2, X-ray:2 or 3
-
-    // Avoid repeating the exact same findings (by title) from the previous analysis
-    const prevTitles = issues.map((it) => it.title);
-    // Build a list of candidate indices excluding previously shown titles
-    const availableIdx = pool
-      .map((_, i) => i)
-      .filter((i) => !prevTitles.includes(pool[i].title));
-
-    // If there aren't enough new candidates, fall back to the full pool (allow repeats)
-    const indicesToChooseFrom = availableIdx.length >= count ? availableIdx : pool.map((_, i) => i);
-
-    const usedIdx = new Set<number>();
-    while (chosen.length < count) {
-      const randIndex = Math.floor(Math.random() * indicesToChooseFrom.length);
-      const idx = indicesToChooseFrom[randIndex];
-      if (usedIdx.has(idx)) continue;
-      usedIdx.add(idx);
-      const base = pool[idx];
-      chosen.push({
-        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-        title: base.title,
-        severity: base.severity,
-        location: base.location,
-        description: base.description,
-      });
-    }
-
-    // produce a high confidence score (90-98)
-    const simulatedConfidence = 90 + Math.floor(Math.random() * 9);
-    const simulatedStatus: "Defective" | "Normal" = "Defective";
-
-    // set results with a short UI delay for polish
-    setTimeout(() => {
-      setConfidence(simulatedConfidence);
-      setStatus(simulatedStatus as any);
-      setIssues(chosen);
+          const data = await response.json();
+          
+          setConfidence(data.confidence);
+          setStatus(data.status);
+          setIssues(data.issues || []);
+          setLoading(false);
+        } catch (error) {
+          console.error('Error analyzing image:', error);
+          setLoading(false);
+          alert(`Failed to analyze image: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
+      };
+      reader.readAsDataURL(image);
+    } catch (error) {
+      console.error('Error reading file:', error);
       setLoading(false);
-    }, 250);
+      alert('Failed to read image. Please try again.');
+    }
   };
 
   const exportReport = () => {
