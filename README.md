@@ -417,7 +417,7 @@ Quick Response  Semantic Check   Severity Level   Step-by-Step Guide
      emergencies: ['Choking', 'Burns', 'CPR', 'Bleeding', 'Fractures'],
      procedures: {
        'Choking': {
-         steps: ['Check if person can speak', 'Perform Heimlich', 'Call 911'],
+         steps: ['Check if person can speak', 'Perform Heimlich', 'Call 108'],
          severity: 'critical',
          relatedConditions: ['Airway_Obstruction', 'Breathing_Difficulty']
        }
@@ -458,7 +458,7 @@ Quick Response  Semantic Check   Severity Level   Step-by-Step Guide
        "${userQuestion}"
        
        Provide clear, simple first-aid steps.
-       Include when to call 911.
+       Include when to call 108.
        Keep it brief and actionable.
      `;
      
@@ -492,7 +492,7 @@ Urgency Levels:
 - Low: Self-care with monitoring
 - Medium: See doctor within 24 hours
 - High: Urgent care needed today
-- Critical: Call 911 immediately
+- Critical: Call 108 immediately
 ```
 
 **3. Response Generation**
@@ -547,7 +547,7 @@ def generate_first_aid_response(user_input):
 
 1. **Medical Validation**: All responses reviewed against clinical guidelines
 2. **Clear Disclaimers**: Every response includes "seek professional medical help" notice  
-3. **Emergency Escalation**: Critical symptoms automatically suggest calling 911
+3. **Emergency Escalation**: Critical symptoms automatically suggest calling 108
 4. **No Diagnosis Mode**: Provides instructions only, never diagnoses conditions
 
 ---
@@ -1541,7 +1541,7 @@ const activateSOS = async () => {
   
   // 4. Call emergency services (optional auto-dial)
   if (user.settings.autoCallEmergency) {
-    window.location.href = 'tel:911';
+    window.location.href = 'tel:108';
   }
   
   // 5. Start continuous location tracking
@@ -1739,7 +1739,7 @@ type EmergencyContact = {
      severity: 'critical',
      message: 'Blood oxygen below 94% - seek immediate care',
      timestamp: Date,
-     action: { label: 'Call 911', callback: () => tel('911') }
+     action: { label: 'Call 108', callback: () => tel('108') }
    }
    ```
 
