@@ -30,7 +30,6 @@ class TrainingPipeline:
         self.model_type = model_type
         self.input_shape = input_shape
         
-        # Initialize model
         if model_type == 'xray':
             self.model_class = XRayCNNModel(input_shape)
         else:
@@ -57,7 +56,6 @@ class TrainingPipeline:
         """
         print(f"📂 Preparing data from {data_dir}...")
         
-        # Training data augmentation
         train_datagen = ImageDataGenerator(
             rescale=1./255,
             shear_range=0.2,
@@ -70,10 +68,8 @@ class TrainingPipeline:
             fill_mode='nearest'
         )
         
-        # Validation/Test data (no augmentation)
         test_datagen = ImageDataGenerator(rescale=1./255)
         
-        # Create generators
         train_dir = os.path.join(data_dir, 'train')
         val_dir = os.path.join(data_dir, 'val')
         test_dir = os.path.join(data_dir, 'test')
@@ -137,7 +133,7 @@ class TrainingPipeline:
         os.makedirs(log_dir, exist_ok=True)
         
         callbacks = [
-            # Save best model
+        
             ModelCheckpoint(
                 filepath=weights_path,
                 monitor='val_accuracy',
@@ -146,8 +142,7 @@ class TrainingPipeline:
                 mode='max',
                 verbose=1
             ),
-            
-            # Reduce learning rate on plateau
+        
             ReduceLROnPlateau(
                 monitor='val_loss',
                 factor=0.3,
@@ -157,7 +152,7 @@ class TrainingPipeline:
                 min_lr=1e-7
             ),
             
-            # Early stopping
+
             EarlyStopping(
                 monitor='val_loss',
                 patience=5,
@@ -166,7 +161,6 @@ class TrainingPipeline:
                 restore_best_weights=True
             ),
             
-            # TensorBoard logging
             TensorBoard(
                 log_dir=log_dir,
                 histogram_freq=1,
@@ -234,7 +228,7 @@ class TrainingPipeline:
         
         fig, axes = plt.subplots(1, 2, figsize=(15, 5))
         
-        # Accuracy plot
+
         axes[0].plot(self.history.history['accuracy'], label='Training Accuracy')
         axes[0].plot(self.history.history['val_accuracy'], label='Validation Accuracy')
         axes[0].set_title('Model Accuracy')
@@ -243,7 +237,6 @@ class TrainingPipeline:
         axes[0].legend()
         axes[0].grid(True)
         
-        # Loss plot
         axes[1].plot(self.history.history['loss'], label='Training Loss')
         axes[1].plot(self.history.history['val_loss'], label='Validation Loss')
         axes[1].set_title('Model Loss')
@@ -276,16 +269,13 @@ class TrainingPipeline:
         
         print("📊 Generating classification report...")
         
-        # Get predictions
         y_true = self.test_generator.classes
         y_pred_proba = self.model.predict(self.test_generator)
         y_pred = (y_pred_proba > 0.5).astype(int).flatten()
-        
-        # Classification report
+      
         print("\n📄 Classification Report:")
         print(classification_report(y_true, y_pred, target_names=['Normal', 'Abnormal']))
         
-        # Confusion matrix
         cm = confusion_matrix(y_true, y_pred)
         
         plt.figure(figsize=(8, 6))
@@ -301,50 +291,26 @@ class TrainingPipeline:
         return y_true, y_pred
 
 def main():
-    """
-    Example training pipeline execution
-    """
     print("🏥 Documed Medical Image Analysis - Training Pipeline")
     print("="*60)
-    
-    # Configuration
-    MODEL_TYPE = 'xray'  # or 'mri'
-    DATA_DIR = './data/chest_xray'  # Update with your data directory
+    MODEL_TYPE = 'xray'  
+    DATA_DIR = './data/chest_xray'  
     BATCH_SIZE = 32
     EPOCHS = 10
     LEARNING_RATE = 0.0001
-    
-    # Initialize pipeline
     pipeline = TrainingPipeline(model_type=MODEL_TYPE)
-    
-    # Prepare data
     train_gen, val_gen, test_gen = pipeline.prepare_data(
         data_dir=DATA_DIR,
         batch_size=BATCH_SIZE
     )
-    
-    # Build and compile model
     model = pipeline.build_and_compile(learning_rate=LEARNING_RATE)
     model.summary()
-    
-    # Setup callbacks
     callbacks = pipeline.setup_callbacks()
-    
-    # Train model
     history = pipeline.train(epochs=EPOCHS, callbacks=callbacks)
-    
-    # Evaluate
     metrics = pipeline.evaluate()
-    
-    # Plot training history
     pipeline.plot_training_history(save_path=f'training_history_{MODEL_TYPE}.png')
-    
-    # Generate classification report
     pipeline.generate_classification_report()
-    
-    # Save complete model
     pipeline.save_model(f'models/{MODEL_TYPE}_complete_model.h5')
-    
     print("\n✅ Training pipeline completed successfully!")
     print(f"   Final Test Accuracy: {metrics['accuracy']*100:.2f}%")
 
