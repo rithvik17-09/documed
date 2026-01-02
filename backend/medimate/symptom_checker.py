@@ -11,7 +11,6 @@ import random
 
 router = APIRouter()
 
-# Medical knowledge base for symptom checking
 SYMPTOM_DATABASE = {
     "fever": ["Common Cold", "Flu", "COVID-19", "Infection"],
     "cough": ["Common Cold", "Bronchitis", "Pneumonia", "Asthma"],
@@ -24,11 +23,10 @@ SYMPTOM_DATABASE = {
     "dizziness": ["Vertigo", "Low Blood Pressure", "Dehydration", "Inner Ear Problems"]
 }
 
-# Request/Response Models
 class SymptomRequest(BaseModel):
     symptoms: List[str]
     duration: Optional[str] = None
-    severity: Optional[int] = 1  # 1-10 scale
+    severity: Optional[int] = 1  
 
 class SymptomResponse(BaseModel):
     possible_conditions: List[Dict]
@@ -39,8 +37,8 @@ class SymptomResponse(BaseModel):
 class Medication(BaseModel):
     name: str
     dosage: str
-    frequency: str  # "daily", "twice daily", "every 6 hours"
-    time: str  # "08:00", "14:00", "20:00"
+    frequency: str  
+    time: str  
     duration_days: int
     notes: Optional[str] = None
 
@@ -76,14 +74,12 @@ async def check_symptoms(request: SymptomRequest):
                     else:
                         possible_conditions[condition] = 1
     
-    # Sort by frequency
     sorted_conditions = sorted(
         possible_conditions.items(),
         key=lambda x: x[1],
         reverse=True
     )
     
-    # Create response
     conditions_list = [
         {
             "name": condition,
@@ -93,7 +89,6 @@ async def check_symptoms(request: SymptomRequest):
         for condition, score in sorted_conditions[:5]
     ]
     
-    # Assess risk level
     critical_symptoms = ["chest pain", "shortness of breath", "severe headache"]
     risk_level = "high" if any(s in " ".join(request.symptoms).lower() for s in critical_symptoms) else "medium" if request.severity and request.severity >= 7 else "low"
     
@@ -111,9 +106,7 @@ async def check_symptoms(request: SymptomRequest):
         recommendation=recommendation,
         should_see_doctor=should_see_doctor
     )
-
-# Medicine Reminder System
-medications_db = {}  # In-memory storage for demo
+medications_db = {} 
 
 @router.post("/medications")
 async def add_medication(medication: Medication):
@@ -145,7 +138,6 @@ async def get_reminders():
     now = datetime.now()
     
     for med_id, med_data in medications_db.items():
-        # Calculate next dose time
         med = Medication(**med_data)
         next_dose = now + timedelta(hours=random.randint(1, 8))
         
@@ -158,7 +150,6 @@ async def get_reminders():
     
     return reminders
 
-# Appointment Booking
 appointments_db = {}
 
 @router.post("/appointments")
@@ -188,16 +179,13 @@ async def get_upcoming_appointments():
     """
     Get upcoming appointments (next 7 days)
     """
-    # For demo, return all appointments
     return list(appointments_db.values())
 
-# Drug Interaction Checker
 @router.post("/interactions")
 async def check_drug_interactions(medication_names: List[str]):
     """
     Check for potential drug interactions
     """
-    # Simplified interaction checking
     common_interactions = {
         ("warfarin", "aspirin"): "Increased bleeding risk",
         ("lisinopril", "ibuprofen"): "May reduce effectiveness of blood pressure medication",
