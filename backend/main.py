@@ -19,10 +19,8 @@ from medimood.mood_analyzer import router as medimood_router
 from pulsechain.sos_handler import router as pulsechain_router
 from xray_analyser.image_processor import router as xray_router
 
-# Load environment variables
 load_dotenv()
 
-# Application metadata
 APP_METADATA = {
     "title": "Documed Backend API",
     "description": "Complete AI-powered healthcare management platform with ML models for medical image analysis, symptom checking, mental wellness tracking, and emergency response",
@@ -46,7 +44,7 @@ async def lifespan(app: FastAPI):
     print("🚀 Starting Documed Backend Server...")
     print("📊 Loading ML models...")
     
-    # Initialize ML models on startup
+
     try:
         from xray_analyser.cnn_inference import load_models
         await load_models()
@@ -61,29 +59,26 @@ async def lifespan(app: FastAPI):
     
     print("🛑 Shutting down Documed Backend Server...")
 
-# Initialize FastAPI app
 app = FastAPI(
     **APP_METADATA,
     lifespan=lifespan
 )
 
-# Configure CORS
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify exact origins
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Include module routers
 app.include_router(docmate_router, prefix="/api/docmate", tags=["DocMate - First Aid"])
 app.include_router(medimate_router, prefix="/api/medimate", tags=["MediMate - Medical Assistant"])
 app.include_router(medimood_router, prefix="/api/medimood", tags=["MediMood - Mental Wellness"])
 app.include_router(pulsechain_router, prefix="/api/pulsechain", tags=["PulseChain - Emergency Response"])
 app.include_router(xray_router, prefix="/api/xray", tags=["X-Ray Analyser - Medical Imaging"])
 
-# Root endpoint
 @app.get("/", tags=["System"])
 async def root():
     """
@@ -104,7 +99,6 @@ async def root():
         "health_check": "/health"
     }
 
-# Health check endpoint
 @app.get("/health", tags=["System"])
 async def health_check():
     """
@@ -119,7 +113,6 @@ async def health_check():
         }
     }
 
-# API information endpoint
 @app.get("/api/info", tags=["System"])
 async def api_info():
     """
@@ -177,7 +170,6 @@ async def api_info():
         }
     }
 
-# Error handlers
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
     return JSONResponse(
@@ -199,7 +191,7 @@ async def general_exception_handler(request, exc):
     )
 
 if __name__ == "__main__":
-    # Run the application
+
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
